@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="estado" Type="bit" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="fecha_edicion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="fecha_edicion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Region_Municipio">
+    <Key>
+      <PropertyRef Name="id_region" />
+      <PropertyRef Name="id_municipio" />
+    </Key>
+    <Property Name="id_region" Type="int" Nullable="false" />
+    <Property Name="id_municipio" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Region_Municipio_Municipio">
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Region_Municipio" Type="Self.Region_Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Municipio">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Region_Municipio">
+        <PropertyRef Name="id_municipio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Region_Municipio_Region">
+    <End Role="Region" Type="Self.Region" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Region_Municipio" Type="Self.Region_Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Region_Municipio">
+        <PropertyRef Name="id_region" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_TESTModelStoreContainer">
+    <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Region_Municipio" EntityType="Self.Region_Municipio" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Region_Municipio_Municipio" Association="Self.FK_Region_Municipio_Municipio">
+      <End Role="Municipio" EntitySet="Municipio" />
+      <End Role="Region_Municipio" EntitySet="Region_Municipio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Region_Municipio_Region" Association="Self.FK_Region_Municipio_Region">
+      <End Role="Region" EntitySet="Region" />
+      <End Role="Region_Municipio" EntitySet="Region_Municipio" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

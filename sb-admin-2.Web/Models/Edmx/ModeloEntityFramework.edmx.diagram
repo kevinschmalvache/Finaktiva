@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="16938c1ac8054a3285016740259905f0" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_TESTModel.Municipio" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="DB_TESTModel.Region" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="DB_TESTModel.Region_Municipio" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

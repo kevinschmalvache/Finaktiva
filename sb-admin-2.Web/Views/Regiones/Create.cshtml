@@ -1,0 +1,40 @@
+﻿@model sb_admin_2.Web.Models.Edmx.Region
+@{
+    ViewBag.Title = "Regiones|Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Crear Región</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<!-- /.row -->
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Id</label>
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", @required = "required", type = "number", max = "999999", min = "1", step = "1", oninput = "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*)\\./g, '$1');" } })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Nombre</label>
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @required = "required", maxlength = "150" } })
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 ">
+                <button type="button" onclick="location.href='@Url.Action("Index", "Regiones")'" class="btn btn-default pull-right">Volver</button>
+            </div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.row -->

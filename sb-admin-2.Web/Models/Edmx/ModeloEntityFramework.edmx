@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_TESTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Municipio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="fecha_edicion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="fecha_edicion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region_Municipio">
+          <Key>
+            <PropertyRef Name="id_region" />
+            <PropertyRef Name="id_municipio" />
+          </Key>
+          <Property Name="id_region" Type="int" Nullable="false" />
+          <Property Name="id_municipio" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Region_Municipio_Municipio">
+          <End Role="Municipio" Type="Self.Municipio" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Region_Municipio" Type="Self.Region_Municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Municipio">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Region_Municipio">
+              <PropertyRef Name="id_municipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Region_Municipio_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Region_Municipio" Type="Self.Region_Municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Region_Municipio">
+              <PropertyRef Name="id_region" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_TESTModelStoreContainer">
+          <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region_Municipio" EntityType="Self.Region_Municipio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Region_Municipio_Municipio" Association="Self.FK_Region_Municipio_Municipio">
+            <End Role="Municipio" EntitySet="Municipio" />
+            <End Role="Region_Municipio" EntitySet="Region_Municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Region_Municipio_Region" Association="Self.FK_Region_Municipio_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Region_Municipio" EntitySet="Region_Municipio" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_TESTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB_TEST_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Municipio" EntityType="DB_TESTModel.Municipio" />
+          <EntitySet Name="Region" EntityType="DB_TESTModel.Region" />
+          <AssociationSet Name="Region_Municipio" Association="DB_TESTModel.Region_Municipio">
+            <End Role="Municipio" EntitySet="Municipio" />
+            <End Role="Region" EntitySet="Region" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Municipio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_edicion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Region" Relationship="DB_TESTModel.Region_Municipio" FromRole="Municipio" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_edicion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Municipio" Relationship="DB_TESTModel.Region_Municipio" FromRole="Region" ToRole="Municipio" />
+        </EntityType>
+        <Association Name="Region_Municipio">
+          <End Type="DB_TESTModel.Municipio" Role="Municipio" Multiplicity="*" />
+          <End Type="DB_TESTModel.Region" Role="Region" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_TESTModelStoreContainer" CdmEntityContainer="DB_TEST_Entities">
+          <EntitySetMapping Name="Municipio">
+            <EntityTypeMapping TypeName="DB_TESTModel.Municipio">
+              <MappingFragment StoreEntitySet="Municipio">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="DB_TESTModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Region_Municipio" TypeName="DB_TESTModel.Region_Municipio" StoreEntitySet="Region_Municipio">
+            <EndProperty Name="Region">
+              <ScalarProperty Name="id" ColumnName="id_region" />
+            </EndProperty>
+            <EndProperty Name="Municipio">
+              <ScalarProperty Name="id" ColumnName="id_municipio" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
